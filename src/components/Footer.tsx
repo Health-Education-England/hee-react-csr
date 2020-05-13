@@ -2,7 +2,7 @@ import React from 'react';
 import { Footer as NHSFooter } from "nhsuk-react-components";
 
 // Renders hardcoded Footer for now
-export default function Footer() {
+export function Footer() {
   return (
     <NHSFooter>
       <NHSFooter.List columns>

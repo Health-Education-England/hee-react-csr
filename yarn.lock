@@ -1028,7 +1028,7 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@bloomreach/react-sdk@^14.1.1":
+"@bloomreach/react-sdk@^14.1.0":
   version "14.1.1"
   resolved "https://registry.yarnpkg.com/@bloomreach/react-sdk/-/react-sdk-14.1.1.tgz#a90a2b7156585666f97bcfa7c370bf63a54154ca"
   integrity sha512-/5YABKR4gPK0dS41uX4pzX0c2akzCdUEFPj5zeNUf2NiAkZb7UKk4332Px/8abFNzPsWylSQGqroe83DzB4vEA==

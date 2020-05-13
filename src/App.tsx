@@ -1,10 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { RouteComponentProps } from 'react-router-dom';
-import { BrComponent, BrPage, BrPageContext } from '@bloomreach/react-sdk';
-import { Menu, AzureADProfile, SharepointFiles } from './components';
-import Footer from './components/Footer';
-import { Label } from "nhsuk-react-components";
+import { BrComponent, BrPage } from '@bloomreach/react-sdk';
+import { AzureADProfile, Footer, HeroBanner, Menu,  SharepointFiles } from './components';
 
 axios.interceptors.request.use(config => ({ ...config, withCredentials: true }));
 
@@ -33,7 +31,7 @@ export default function App(props: RouteComponentProps) {
       path: `${siteContextRemovedPath}${props.location.search}`,
     },
   };
-  const mapping = { 'AzureAD Profile': AzureADProfile, 'Sharepoint Files': SharepointFiles };
+  const mapping = { 'AzureAD Profile': AzureADProfile, 'Hero Banner': HeroBanner, 'Sharepoint Files': SharepointFiles };
 
   return (
     <BrPage configuration={configuration} mapping={mapping}>
@@ -55,13 +53,14 @@ export default function App(props: RouteComponentProps) {
           </div>
         </nav>
       </header>
+      <BrComponent path="hero" />
       <div className="nhsuk-width-container">
         <main className="nhsuk-main-wrapper" id="maincontent">
-          <BrPageContext.Consumer>
+          {/* <BrPageContext.Consumer>
             { page => (
               <Label isPageHeading>{ page!.getTitle() }</Label>
             ) }
-          </BrPageContext.Consumer>
+          </BrPageContext.Consumer> */}
           <BrComponent path="main" />
         </main>
       </div>

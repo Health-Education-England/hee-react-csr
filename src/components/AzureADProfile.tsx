@@ -2,9 +2,15 @@ import { BrProps, BrPageContext } from '@bloomreach/react-sdk';
 import React from 'react';
 import { SummaryList, BodyText, WarningCallout } from "nhsuk-react-components";
 
-// Renders hardcoded Footer for now
+interface UserProps {
+  displayName: string,
+  username: string,
+  jobTitle: string,
+  groups: string[]
+}
+
 export function AzureADProfile(props: BrProps) {
-  const { user } = props.component.getModels();
+  const { user }: { user: UserProps } = props.component.getModels();
   const page = React.useContext(BrPageContext);
 
   if (!user) {
@@ -38,7 +44,7 @@ export function AzureADProfile(props: BrProps) {
       <SummaryList.Row>
         <SummaryList.Key>Groups</SummaryList.Key>
         <SummaryList.Value>
-          { user.groups.map((group: String, index: string | number | undefined) => (
+          { user.groups.map((group, index) => (
             <BodyText key={index}>{group}</BodyText>
           )) }
         </SummaryList.Value>

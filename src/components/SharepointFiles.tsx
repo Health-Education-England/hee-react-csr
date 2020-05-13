@@ -2,7 +2,6 @@ import { BrProps, BrPageContext } from '@bloomreach/react-sdk';
 import React from 'react';
 import { ContentsList, SummaryList, WarningCallout } from "nhsuk-react-components";
 
-// Renders hardcoded Footer for now
 export function SharepointFiles(props: BrProps) {
   const { sharepointSiteFiles } = props.component.getModels();
   const page = React.useContext(BrPageContext);
