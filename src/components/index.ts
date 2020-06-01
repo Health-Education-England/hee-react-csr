@@ -1,3 +1,4 @@
+export * from './Article';
 export * from './AzureADProfile';
 export * from './Footer';
 export * from './HeroBanner';

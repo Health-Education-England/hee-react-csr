@@ -2,16 +2,35 @@ import React from 'react';
 import axios from 'axios';
 import { RouteComponentProps } from 'react-router-dom';
 import { BrComponent, BrPage } from '@bloomreach/react-sdk';
-import { AzureADProfile, Footer, HeroBanner, Menu,  SharepointFiles } from './components';
+import { Article, AzureADProfile, Footer, HeroBanner, Menu, SharepointFiles } from './components';
 
 axios.interceptors.request.use(config => ({ ...config, withCredentials: true }));
 
 export default function App(props: RouteComponentProps) {
 
+  var channels = process.env.REACT_APP_BR_SUPPORTED_CHANNELS!.split(',');
+
+  var liveCMSBaseUrl = process.env.REACT_APP_LIVE_BR_BASE_URL!;
+  var previewCMSBaseUrl = process.env.REACT_APP_PREVIEW_BR_BASE_URL!;
+  var siteContextRemovedPath = props.location.pathname;
+
+  channels.forEach((channel) => {
+    if (props.location.pathname.startsWith('/site/' + channel)) {
+      // Appending channel to live cmsBaseUrl
+      liveCMSBaseUrl += '/' + channel;
+      siteContextRemovedPath = props.location.pathname.replace('/site/' + channel, '');
+    }
+
+    if (props.location.pathname.startsWith('/site/_cmsinternal/' + channel)) {
+      // Appending channel to preview cmsBaseUrl
+      previewCMSBaseUrl += '/' + channel;
+      siteContextRemovedPath = props.location.pathname.replace('/site/_cmsinternal/' + channel, '/site/_cmsinternal');
+    }
+  });
+
   // This is to remove the extra `/site` from the route path, for instnce /site/resourceapi/site/user-home-page
   // so that it becomes /site/resourceapi/user-home-page. This is required for live mode only.
-  var siteContextRemovedPath = props.location.pathname;
-  if (props.location.pathname.startsWith('/site') && !props.location.pathname.startsWith('/site/_cmsinternal')) {
+  if (siteContextRemovedPath.startsWith('/site') && !siteContextRemovedPath.startsWith('/site/_cmsinternal')) {
     siteContextRemovedPath = props.location.pathname.substring('/site'.length);
   }
 
@@ -19,11 +38,11 @@ export default function App(props: RouteComponentProps) {
     httpClient: axios,
     options: {
       live: {
-        cmsBaseUrl: process.env.REACT_APP_LIVE_BR_BASE_URL!,
+        cmsBaseUrl: liveCMSBaseUrl,
         spaBaseUrl: process.env.REACT_APP_LIVE_SPA_BASE_URL,
       },
       preview: {
-        cmsBaseUrl: process.env.REACT_APP_PREVIEW_BR_BASE_URL!,
+        cmsBaseUrl: previewCMSBaseUrl,
         spaBaseUrl: process.env.REACT_APP_PREVIEW_SPA_BASE_URL,
       },
     },
@@ -31,7 +50,7 @@ export default function App(props: RouteComponentProps) {
       path: `${siteContextRemovedPath}${props.location.search}`,
     },
   };
-  const mapping = { 'AzureAD Profile': AzureADProfile, 'Hero Banner': HeroBanner, 'Sharepoint Files': SharepointFiles };
+  const mapping = { Article, 'AzureAD Profile': AzureADProfile, 'Hero Banner': HeroBanner, 'Sharepoint Files': SharepointFiles };
 
   return (
     <BrPage configuration={configuration} mapping={mapping}>
