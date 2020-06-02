@@ -2,14 +2,15 @@ import React from 'react';
 import { BrComponentContext, BrManageMenuButton, BrPageContext } from '@bloomreach/react-sdk';
 import { Header, Button, Form } from "nhsuk-react-components";
 
-interface LogoOrgTheme {
+interface HeaderTheme {
+  whiteHeaderBg: boolean,
   orgName: string,
   orgSplit: string,
   orgDescriptor: string
 }
 
-interface LogoOrgThemeModels {
-  logoOrgTheme: LogoOrgTheme
+interface HeaderThemeModels {
+  headerTheme: HeaderTheme
 }
 
 interface MenuLinkProps {
@@ -17,8 +18,6 @@ interface MenuLinkProps {
 }
 
 function MenuLink({ item }: MenuLinkProps) {
-  // const page = React.useContext(BrPageContext)!;
-
   if (!item._links.site) {
     return <Header.NavItem disabled>{item.name}</Header.NavItem>;
   }
@@ -63,16 +62,16 @@ export function Menu() {
   const channels = process.env.REACT_APP_BR_SUPPORTED_CHANNELS!.split(',');
   let logoUrl = '/site';
   channels.forEach((channel) => {
-    if (currentUrl.indexOf('/site/' + channel) != -1 || currentUrl.indexOf('/site/_cmsinternal/' + channel) != -1) {
+    if (currentUrl.indexOf('/site/' + channel) !== -1 || currentUrl.indexOf('/site/_cmsinternal/' + channel) !== -1) {
       logoUrl = '/site/' + channel;
     }
   });
 
   const { menu } = component.getModels<MenuModels>();
-  const { logoOrgTheme } = component.getModels<LogoOrgThemeModels>();
+  const { headerTheme } = component.getModels<HeaderThemeModels>();
 
   return (
-    <Header orgName={ logoOrgTheme.orgName } orgSplit={ logoOrgTheme.orgSplit } orgDescriptor={logoOrgTheme.orgDescriptor!}>
+    <Header orgName={ headerTheme.orgName } orgSplit={ headerTheme.orgSplit } orgDescriptor={headerTheme.orgDescriptor!} white={ headerTheme.whiteHeaderBg }>
       <Header.Container>
         <Header.Logo href={ logoUrl} />
         <Header.Content>
