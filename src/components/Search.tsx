@@ -1,12 +1,12 @@
 import algoliasearch from 'algoliasearch/lite';
 import {
     InstantSearch,
-    SearchBox,
     Hits,
-    Highlight, ClearRefinements, RefinementList, Configure, Pagination
+    Highlight, ClearRefinements, RefinementList, Configure, Pagination, SearchBox
 } from 'react-instantsearch-dom';
 import * as React from 'react';
 import './Search.css';
+import {CloseIcon, SearchIcon} from "nhsuk-react-components";
 
 const searchClient = algoliasearch('UDB415NOQA', 'e2ae2995fd3b2f102b60a245e2e786e1');
 
@@ -28,7 +28,9 @@ export function Search() {
                     <Configure hitsPerPage={8}/>
                 </div>
                 <div className="right-panel">
-                    <SearchBox/>
+                    <div className="custom-search">
+                     <SearchBox submit={<SearchIcon/>} reset={<CloseIcon/>}/>
+                    </div>
                     <Hits hitComponent={Hit}/>
                     <Pagination/>
                 </div>
@@ -43,8 +45,7 @@ interface HitProps {
         content: string,
         title: string,
         introduction: number,
-        category: string,
-        isRequired: boolean
+        category: string
     }
 }
 
