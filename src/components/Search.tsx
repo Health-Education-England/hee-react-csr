@@ -1,20 +1,17 @@
 import algoliasearch from 'algoliasearch/lite';
 import {
     InstantSearch,
-    Highlight,
     ClearRefinements,
     Configure,
     SearchBox,
     connectRefinementList,
-    HitsProps,
-    connectHits,
+    connectHits, connectHighlight,
 } from 'react-instantsearch-dom';
 import * as React from 'react';
 import './Search.css';
 import {CloseIcon, SearchIcon} from "nhsuk-react-components";
 import {Hit, HitsProvided, RefinementListProvided} from "react-instantsearch-core";
 import Checkboxes from "nhsuk-react-components/lib/components/checkboxes";
-import {SyntheticEvent} from "react";
 import Pagination from "./SearchPagination";
 
 const searchClient = algoliasearch('UDB415NOQA', 'e2ae2995fd3b2f102b60a245e2e786e1');
@@ -47,6 +44,21 @@ export function Search() {
     );
 }
 
+const CustomHighlight = connectHighlight(({highlight, attribute, hit}) => {
+    const parsedHit = highlight({
+        highlightProperty: '_highlightResult',
+        attribute,
+        hit
+    });
+
+    return (
+        <div>
+            {parsedHit.map(
+                part => (part.isHighlighted ? <mark>{part.value}</mark> : part.value)
+            )}
+        </div>
+    );
+});
 
 interface HitProps {
     hit: {
@@ -65,14 +77,22 @@ const Hits = ({hits}: HitsProvided<Hit>) => (
 
         <ul className="nhsuk-list nhsuk-list--border">
             {hits.map(hit => (
-                <li>
-                    <h2 className="nhsuk-u-margin-bottom-1" style={{"fontWeight": 400, "fontSize": "19px"}}><a
-                        className="app-search-results-item">
-                        {hit.title} </a></h2>
-                    <p className="nhsuk-body-s nhsuk-u-margin-top-1">
-                        {hit.introduction} (<strong>{hit.category}</strong>).
-                    </p>
-                </li>
+                <div>
+                    <li>
+                        <h2 className="nhsuk-u-margin-bottom-1" style={{"fontWeight": 400, "fontSize": "19px"}}><a
+                            className="app-search-results-item">
+                            <CustomHighlight attribute="title" hit={hit}/>
+                        </a>
+
+                        </h2>
+                        <p className="nhsuk-body-s nhsuk-u-margin-top-1">
+                            <CustomHighlight attribute="introduction" hit={hit}/>
+                            <strong>
+                                <CustomHighlight attribute="category" hit={hit}/>
+                            </strong>
+                        </p>
+                    </li>
+                </div>
             ))}
         </ul>
     </div>
