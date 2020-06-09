@@ -36,7 +36,7 @@ class SearchPagination extends Component<PaginationProps> {
 
             nextButton =
                 <Pagination.Link next href={createURL(nextPage)} onClick={(event) => this.onChange(event, nextPage)}>
-                    Page {currentRefinement + 1} of {nbPages}
+                    Page {nextPage} of {nbPages}
                 </Pagination.Link>;
         }
         return (
