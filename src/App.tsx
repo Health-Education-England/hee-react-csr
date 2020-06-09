@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { RouteComponentProps } from 'react-router-dom';
 import { BrComponent, BrPage } from '@bloomreach/react-sdk';
-import { Article, AzureADProfile, Footer, HeroBanner, Menu, SharepointFiles } from './components';
+import { Article, AzureADProfile, Footer, HeroBanner, Menu, SharepointFiles, Search} from './components';
 
 axios.interceptors.request.use(config => ({ ...config, withCredentials: true }));
 
@@ -73,6 +73,7 @@ export default function App(props: RouteComponentProps) {
         </nav>
       </header>
       <BrComponent path="hero" />
+      <Search></Search>
       <div className="nhsuk-width-container">
         <main className="nhsuk-main-wrapper" id="maincontent">
           {/* <BrPageContext.Consumer>
