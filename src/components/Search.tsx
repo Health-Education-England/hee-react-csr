@@ -8,7 +8,6 @@ import {
     connectRefinementList,
     HitsProps,
     connectHits,
-    connectPagination
 } from 'react-instantsearch-dom';
 import * as React from 'react';
 import './Search.css';
@@ -82,13 +81,17 @@ const Hits = ({hits}: HitsProvided<Hit>) => (
 const CustomHits = connectHits(Hits);
 
 const RefinementList = ({items, refine}: RefinementListProvided) => (
-    <Checkboxes onChange={(e: SyntheticEvent<HTMLInputElement>) => {
-        const target = e.target as HTMLInputElement;
-        const item = items.filter(item => item.label === target.value)[0].value;
-        refine(item);
-    }}>
+    <Checkboxes>
         {items.map(item => (
-            <Checkboxes.Box value={item.label}>{item.label} ({item.count})</Checkboxes.Box>
+            <Checkboxes.Box
+                key={item.label}
+
+                onClick={() => {
+                    return refine(item.value);
+                }}
+            >
+                {item.label} ({item.count})
+            </Checkboxes.Box>
         ))}
     </Checkboxes>
 );
