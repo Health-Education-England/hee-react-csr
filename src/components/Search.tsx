@@ -29,6 +29,10 @@ export function Search() {
                     <ClearRefinements/>
                     <h2>Category</h2>
                     <CustomRefinementList attribute="category"/>
+                    <h2>Region</h2>
+                    <CustomRefinementList attribute="region"/>
+                    <h2>Speciality</h2>
+                    <CustomRefinementList attribute="speciality"/>
                     <Configure hitsPerPage={1}/>
                 </div>
                 <div className="right-panel">
