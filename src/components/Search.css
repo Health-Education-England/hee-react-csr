@@ -9,6 +9,7 @@ body { font-family: sans-serif; padding: 1em; }
 .hit-name { margin-bottom: .5em }
 .hit-description { color: #888; font-size: 14px; margin-bottom: .5em }
 
+/*algolia search input*/
 .ais-SearchBox-input {
     height: 52px;
     padding: .3rem 3rem!important;
@@ -56,4 +57,26 @@ body { font-family: sans-serif; padding: 1em; }
 .nhsuk-icon__close {
     height: 20px;
     width: 20px;
+}
+
+/*nhs left side filters*/
+.nhsuk-checkboxes__input {
+    height: 30px;
+    width: 30px;
+}
+
+.nhsuk-checkboxes__label {
+    font-size: 16px;
+    padding: 3px 0 0 0;
+}
+.nhsuk-checkboxes__input+.nhsuk-checkboxes__label::before {
+    height: 30px;
+    width: 30px;
+}
+
+.nhsuk-checkboxes__input+.nhsuk-checkboxes__label::after {
+    height: 7px;
+    left: 7px;
+    top: 10px;
+    width: 16px;
 }

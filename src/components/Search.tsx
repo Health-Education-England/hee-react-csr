@@ -5,7 +5,7 @@ import {
     Configure,
     SearchBox,
     connectRefinementList,
-    connectHits, connectHighlight,
+    connectHits, connectHighlight, Snippet,
 } from 'react-instantsearch-dom';
 import * as React from 'react';
 import './Search.css';
@@ -14,7 +14,7 @@ import {Hit, HitsProvided, RefinementListProvided} from "react-instantsearch-cor
 import Checkboxes from "nhsuk-react-components/lib/components/checkboxes";
 import Pagination from "./SearchPagination";
 
-const searchClient = algoliasearch('UDB415NOQA', 'e2ae2995fd3b2f102b60a245e2e786e1');
+const searchClient = algoliasearch('02F3VJA4YI', 'b20c325ddd93b08a4b9fa792e619d161');
 
 export function Search() {
     return (
@@ -27,12 +27,21 @@ export function Search() {
             <InstantSearch searchClient={searchClient} indexName="brdocs">
                 <div className="left-panel">
                     <ClearRefinements/>
-                    <h2>Category</h2>
-                    <CustomRefinementList attribute="category"/>
-                    <h2>Region</h2>
+                    <div style={{backgroundColor: 'white', margin: '50px 20px 20px 0px', padding: '10px' }}>
+                        <h5>Category</h5>
+                        <CustomRefinementList attribute="category"/>
+                    </div>
+
+                    <div style={{backgroundColor: 'white', margin: '10px 20px 20px 0px', padding: '10px' }}>
+                    <h5>Region</h5>
                     <CustomRefinementList attribute="region"/>
-                    <h2>Speciality</h2>
+                    </div>
+
+                    <div style={{backgroundColor: 'white', margin: '10px 20px 20px 0px', padding: '10px' }}>
+                    <h5>Speciality</h5>
                     <CustomRefinementList attribute="speciality"/>
+                    </div>
+
                     <Configure hitsPerPage={1}/>
                 </div>
                 <div className="right-panel">
@@ -91,6 +100,7 @@ const Hits = ({hits}: HitsProvided<Hit>) => (
                         </h2>
                         <p className="nhsuk-body-s nhsuk-u-margin-top-1">
                             <CustomHighlight attribute="introduction" hit={hit}/>
+                            <Snippet hit={hit} attribute="content" />;
                             <strong>
                                 <CustomHighlight attribute="category" hit={hit}/>
                             </strong>
