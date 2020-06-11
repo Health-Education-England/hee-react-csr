@@ -10,17 +10,50 @@ body { font-family: sans-serif; padding: 1em; }
 .hit-description { color: #888; font-size: 14px; margin-bottom: .5em }
 
 .ais-SearchBox-input {
-    height: 40px;
+    height: 52px;
     padding: .3rem 3rem!important;
-
+    padding-left: 10px !important;
 }
 
 .ais-SearchBox-submit {
-    top: 35% !important;
-    left: .5rem !important;
+    right: 0rem !important;
+    background-color: green!important;
+    height: 52px!important;
+    float: right!important;
+    margin: 0px !important;
+    padding: unset;
+    width: 52px!important;
+    left: unset !important;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.ais-SearchBox-input:hover {
+    outline: none;
+}
+
+.ais-SearchBox-input:focus {
+    outline: none;
+}
+
+.ais-SearchBox-submit:focus{
+    outline: none;
 }
 
 .ais-SearchBox-reset {
-    right: 1.4rem !important;
-    top: 35% !important;
+    /*right: 1.4rem !important;*/
+    /*top: 35% !important;*/
+
+    right: 5rem !important;
+}
+
+.nhsuk-icon__search {
+    height: 38px;
+    width: 38px;
+    fill: #ffffff;
+}
+
+.nhsuk-icon__close {
+    height: 20px;
+    width: 20px;
 }
