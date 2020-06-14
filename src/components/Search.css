@@ -1,29 +1,65 @@
-body { font-family: sans-serif; padding: 1em; }
-.ais-SearchBox { margin: 1em 0; }
-.ais-Pagination { margin-top: 1em }
-.left-panel { float: left; width: 250px; }
-.right-panel { margin-left: 260px; }
-.ais-InstantSearch { max-width: 960px; overflow: hidden; margin: 0 auto }
-.ais-Hits-item { margin-bottom: 1em; width: calc(50% - 1rem) }
-.ais-Hits-item img { margin-right: 1em }
-.hit-name { margin-bottom: .5em }
-.hit-description { color: #888; font-size: 14px; margin-bottom: .5em }
+body {
+    font-family: sans-serif;
+    padding: 1em;
+}
+
+.ais-SearchBox {
+    margin: 1em 0;
+}
+
+.ais-Pagination {
+    margin-top: 1em
+}
+
+.left-panel {
+    float: left;
+    width: 250px;
+}
+
+.right-panel {
+    margin-left: 260px;
+}
+
+.ais-InstantSearch {
+    max-width: 960px;
+    overflow: hidden;
+    margin: 0 auto
+}
+
+.ais-Hits-item {
+    margin-bottom: 1em;
+    width: calc(50% - 1rem)
+}
+
+.ais-Hits-item img {
+    margin-right: 1em
+}
+
+.hit-name {
+    margin-bottom: .5em
+}
+
+.hit-description {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: .5em
+}
 
 /*algolia search input*/
 .ais-SearchBox-input {
     height: 52px;
-    padding: .3rem 3rem!important;
+    padding: .3rem 3rem !important;
     padding-left: 10px !important;
 }
 
 .ais-SearchBox-submit {
     right: 0rem !important;
-    background-color: green!important;
-    height: 52px!important;
-    float: right!important;
+    background-color: green !important;
+    height: 52px !important;
+    float: right !important;
     margin: 0px !important;
     padding: unset;
-    width: 52px!important;
+    width: 52px !important;
     left: unset !important;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -37,7 +73,7 @@ body { font-family: sans-serif; padding: 1em; }
     outline: none;
 }
 
-.ais-SearchBox-submit:focus{
+.ais-SearchBox-submit:focus {
     outline: none;
 }
 
@@ -69,14 +105,29 @@ body { font-family: sans-serif; padding: 1em; }
     font-size: 16px;
     padding: 3px 0 0 0;
 }
-.nhsuk-checkboxes__input+.nhsuk-checkboxes__label::before {
+
+.nhsuk-checkboxes__input + .nhsuk-checkboxes__label::before {
     height: 30px;
     width: 30px;
 }
 
-.nhsuk-checkboxes__input+.nhsuk-checkboxes__label::after {
+.nhsuk-checkboxes__input + .nhsuk-checkboxes__label::after {
     height: 7px;
     left: 7px;
     top: 10px;
     width: 16px;
+}
+
+.nhsuk-label {
+    font-size: 17px;
+}
+
+.custom-refinement-list {
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.custom-refinement-section {
+    margin: 0px 20px 20px 0px;
 }
