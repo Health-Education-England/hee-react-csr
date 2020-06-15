@@ -50,7 +50,7 @@ export default function App(props: RouteComponentProps) {
       path: `${siteContextRemovedPath}${props.location.search}`,
     },
   };
-  const mapping = { Article, 'AzureAD Profile': AzureADProfile, 'Hero Banner': HeroBanner, 'Sharepoint Files': SharepointFiles };
+  const mapping = { Article, 'AzureAD Profile': AzureADProfile, 'Hero Banner': HeroBanner, 'Sharepoint Files': SharepointFiles, Search };
 
   return (
     <BrPage configuration={configuration} mapping={mapping}>
@@ -73,7 +73,6 @@ export default function App(props: RouteComponentProps) {
         </nav>
       </header>
       <BrComponent path="hero" />
-      <Search></Search>
       <div className="nhsuk-width-container">
         <main className="nhsuk-main-wrapper" id="maincontent">
           {/* <BrPageContext.Consumer>

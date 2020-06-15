@@ -76,7 +76,7 @@ export function Menu() {
         <Header.Logo href={ logoUrl} />
         <Header.Content>
           <Header.MenuToggle />
-          <Header.Search />
+          <Header.Search action={"/search"}/>
           { renderLogoutButton && <Logout /> }
         </Header.Content>
       </Header.Container>

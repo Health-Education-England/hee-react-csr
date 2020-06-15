@@ -4,7 +4,11 @@ import {
     Configure,
     SearchBox,
     connectRefinementList,
-    connectHits, connectHighlight, Snippet, connectStats, connectSortBy,
+    connectHits,
+    Snippet,
+    connectStats,
+    connectSortBy,
+    Highlight,
 } from 'react-instantsearch-dom';
 import * as React from 'react';
 import './Search.css';
@@ -13,10 +17,21 @@ import {Hit, HitsProvided, RefinementListProvided} from "react-instantsearch-cor
 import Checkboxes from "nhsuk-react-components/lib/components/checkboxes";
 import Pagination from "./SearchPagination";
 import Select from "nhsuk-react-components/lib/components/select";
+import {BrProps} from "@bloomreach/react-sdk";
 
-const searchClient = algoliasearch('02F3VJA4YI', 'b20c325ddd93b08a4b9fa792e619d161');
+export function Search(props: BrProps) {
 
-export function Search() {
+    const indexName = props.component.getParameters()['indexName'] || '';
+    const appId = props.component.getParameters()['appId'] || '';
+    const apiKey = props.component.getParameters()['apiKey'] || '';
+
+    if (!indexName || !apiKey || !appId) {
+        console.log("Search component is not configured correctly!");
+        return null;
+    }
+
+    const searchClient = algoliasearch(appId, apiKey);
+
     return (
         <div className="nhsuk-width-container">
             <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/instantsearch.css@7.3.1/themes/reset-min.css'
@@ -24,7 +39,7 @@ export function Search() {
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7.3.1/themes/algolia-min.css"
                   integrity="sha256-HB49n/BZjuqiCtQQf49OdZn63XuKFaxcIHWf0HNKte8=" crossOrigin="anonymous"/>
 
-            <InstantSearch searchClient={searchClient} indexName="brdocs">
+            <InstantSearch searchClient={searchClient} indexName={indexName}>
                 <div className="left-panel">
                     <div className="custom-refinement-section">
                         <div className="custom-refinement-list">
@@ -42,7 +57,7 @@ export function Search() {
                             <CustomRefinementList attribute="speciality"/>
                         </div>
                     </div>
-                    <Configure hitsPerPage={1}/>
+                    <Configure hitsPerPage={5}/>
                 </div>
                 <div className="right-panel">
                     <div className="custom-search">
@@ -64,48 +79,23 @@ export function Search() {
     );
 }
 
-const CustomHighlight = connectHighlight(({highlight, attribute, hit}) => {
-    const parsedHit = highlight({
-        highlightProperty: '_highlightResult',
-        attribute,
-        hit
-    });
-
-    return (
-        <div>
-            {parsedHit.map(
-                part => (part.isHighlighted ? <mark>{part.value}</mark> : part.value)
-            )}
-        </div>
-    );
-});
-
-interface HitProps {
-    hit: {
-        content: string,
-        title: string,
-        introduction: number,
-        category: string
-    }
-}
-
 const Hits = ({hits}: HitsProvided<Hit>) => (
     <div>
         <ul className="nhsuk-list nhsuk-list--border">
             {hits.map(hit => (
-                <div>
+                <div key={hit.objectID}>
                     <li>
                         <h2 className="nhsuk-u-margin-bottom-1" style={{"fontWeight": 400, "fontSize": "19px"}}>
                             <a
                                 className="app-search-results-item">
-                                <CustomHighlight attribute="title" hit={hit}/>
+                                <Highlight attribute="title" hit={hit}/>
                             </a>
                         </h2>
                         <p className="nhsuk-body-s nhsuk-u-margin-top-1">
-                            <CustomHighlight attribute="introduction" hit={hit}/>
+                            <Highlight attribute="introduction" hit={hit}/>
                             <Snippet hit={hit} attribute="content"/>;
                             <strong>
-                                <CustomHighlight attribute="category" hit={hit}/>
+                                <Highlight attribute="category" hit={hit}/>
                             </strong>
                         </p>
                     </li>
@@ -144,13 +134,11 @@ const Stats = ({nbHits}: StatsProvided) => (
         Found <b>{nbHits}</b> matching results.
     </p>
 );
-
 const CustomStats = connectStats(Stats);
 
 
 const SortBy = ({items, refine, createURL}: any) => (
     <Select
-        id="select-1"
         label="Sort by"
         onChange={(event: any) => {
             event.preventDefault();
@@ -160,6 +148,7 @@ const SortBy = ({items, refine, createURL}: any) => (
     >
         {items.map((item: { value: string, label: string, isRefined: boolean }) => (
             <Select.Option
+                key={item.value}
                 value={item.value}
                 href={createURL(item.value)}>
                 {item.label}
