@@ -42,10 +42,12 @@ export function Article(props: BrProps) {
         <h2>{ title }</h2>
         <div dangerouslySetInnerHTML={{ __html: summary.value }} />
       </Panel>
-      <ContentsList>
-        <h3>Related Articles</h3>
-        { relatedLinks }
-      </ContentsList>
+      {relatedLinks.length > 0 &&
+        <ContentsList>
+          <h3>Related Articles</h3>
+          { relatedLinks }
+        </ContentsList>
+      }
     </>
   );
 }
