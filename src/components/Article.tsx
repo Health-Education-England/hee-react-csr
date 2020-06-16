@@ -3,8 +3,8 @@ import React from 'react';
 import { Panel, ContentsList } from "nhsuk-react-components";
 
 export function Article(props: BrProps) {
-  const { articleDocument: articleDocumentRef } = props.component.getModels();
-  const articleDocument = articleDocumentRef && props.page.getContent(articleDocumentRef);
+  const { document: articleDocumentRef } = props.component.getModels();
+  const articleDocument = articleDocumentRef && props.page.getContent(articleDocumentRef)!;
   const page = React.useContext(BrPageContext);
 
   if (!articleDocument || !page) {

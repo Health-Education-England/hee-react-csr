@@ -64,10 +64,10 @@ export function Search(props: BrProps) {
                         <SearchBox submit={<SearchIcon/>} reset={<CloseIcon/>}/>
                     </div>
                     <CustomSortBy
-                        defaultRefinement="brdocs"
+                        defaultRefinement="articles"
                         items={[
-                            {value: 'brdocs', label: 'Relevance'},
-                            {value: 'brdocs_date_desc', label: 'Most recently modified'}
+                            {value: 'articles', label: 'Relevance'},
+                            {value: 'articles_date_desc', label: 'Most recently modified'}
                         ]}
                     />
                     <CustomStats/>
@@ -79,6 +79,13 @@ export function Search(props: BrProps) {
     );
 }
 
+interface HitProps {
+    summary: string,
+    title: string,
+    category: string
+    path: string
+}
+
 const Hits = ({hits}: HitsProvided<Hit>) => (
     <div>
         <ul className="nhsuk-list nhsuk-list--border">
@@ -87,13 +94,13 @@ const Hits = ({hits}: HitsProvided<Hit>) => (
                     <li>
                         <h2 className="nhsuk-u-margin-bottom-1" style={{"fontWeight": 400, "fontSize": "19px"}}>
                             <a
-                                className="app-search-results-item">
+                                className="app-search-results-item" href={hit.path}>
                                 <Highlight attribute="title" hit={hit}/>
                             </a>
                         </h2>
                         <p className="nhsuk-body-s nhsuk-u-margin-top-1">
                             <Highlight attribute="introduction" hit={hit}/>
-                            <Snippet hit={hit} attribute="content"/>;
+                            <Snippet hit={hit} attribute="summary"/>;
                             <strong>
                                 <Highlight attribute="category" hit={hit}/>
                             </strong>
