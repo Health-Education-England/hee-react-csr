@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrComponentContext, BrManageMenuButton, BrPageContext } from '@bloomreach/react-sdk';
-import { Header, Button, Form } from "nhsuk-react-components";
+import { Header, Button, Form, Breadcrumb } from "nhsuk-react-components";
 
 interface HeaderTheme {
   whiteHeaderBg: boolean,
@@ -71,6 +71,7 @@ export function Menu() {
   const { headerTheme } = component.getModels<HeaderThemeModels>();
 
   return (
+    <>
     <Header orgName={ headerTheme.orgName } orgSplit={ headerTheme.orgSplit } orgDescriptor={headerTheme.orgDescriptor!} white={ headerTheme.whiteHeaderBg }>
       <Header.Container>
         <Header.Logo href={ logoUrl} />
@@ -95,5 +96,14 @@ export function Menu() {
         )) }
       </Header.Nav>
     </Header>
+
+    {/* <Breadcrumb>
+      <Breadcrumb.Item href="/level/one">Home</Breadcrumb.Item>
+      <Breadcrumb.Item href="/level/two">Training</Breadcrumb.Item>
+      <Breadcrumb.Item href="/level/three">Specialty</Breadcrumb.Item>
+      <Breadcrumb.Item href="/level/three">Surgery</Breadcrumb.Item>
+      <Breadcrumb.Back href="/level/three">Paediatric Surgery</Breadcrumb.Back>
+    </Breadcrumb> */}
+    </>
   );
 }

@@ -10,12 +10,17 @@ export function HeroBanner(props: BrProps) {
     return null;
   }
 
-  const { heading, summaryText } = heroBannerDocument.getData<DocumentData>();
+  const { heading, image: imageRef, summaryText } = heroBannerDocument.getData<DocumentData>();
+
+  const image = imageRef && props.page.getContent(imageRef);
 
   return (
-    <Hero>
+    <>
+    <Hero imageSrc={ image?.getUrl() }>
       <Hero.Heading>{ heading }</Hero.Heading>
       <Hero.Text>{ summaryText }</Hero.Text>
     </Hero>
+    <br/>
+    </>
   );
 }
