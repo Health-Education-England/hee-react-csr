@@ -2,13 +2,22 @@ import React from 'react';
 import { BrComponentContext, BrManageMenuButton, BrPageContext } from '@bloomreach/react-sdk';
 import { Header, Button, Form } from "nhsuk-react-components";
 
+interface HeaderTheme {
+  whiteHeaderBg: boolean,
+  orgName: string,
+  orgSplit: string,
+  orgDescriptor: string
+}
+
+interface HeaderThemeModels {
+  headerTheme: HeaderTheme
+}
+
 interface MenuLinkProps {
   item: MenuModels['menu']['siteMenuItems'][0];
 }
 
 function MenuLink({ item }: MenuLinkProps) {
-  // const page = React.useContext(BrPageContext)!;
-
   if (!item._links.site) {
     return <Header.NavItem disabled>{item.name}</Header.NavItem>;
   }
@@ -40,22 +49,34 @@ export function Menu() {
     return null;
   }
 
+  const currentUrl = page.toJSON()!._links!.site.href;
+
   // Temp. hack to render `Logout` button only for spring-security
-  // secured `/user-home-page`
+  // secured `/user-home-page` page
   let renderLogoutButton = false;
-  if (page.toJSON()!._links!.site.href.endsWith('/user-home-page')) {
+  if (currentUrl.endsWith('/user-home-page')) {
     renderLogoutButton = true;
   }
 
+  // Builds logo url based on current page path
+  const channels = process.env.REACT_APP_BR_SUPPORTED_CHANNELS!.split(',');
+  let logoUrl = '/site';
+  channels.forEach((channel) => {
+    if (currentUrl.indexOf('/site/' + channel) !== -1 || currentUrl.indexOf('/site/_cmsinternal/' + channel) !== -1) {
+      logoUrl = '/site/' + channel;
+    }
+  });
+
   const { menu } = component.getModels<MenuModels>();
+  const { headerTheme } = component.getModels<HeaderThemeModels>();
 
   return (
-    <Header orgName="Health Education England" orgSplit="Library and Knowledge Services" orgDescriptor="NHS Foundation Trust">
+    <Header orgName={ headerTheme.orgName } orgSplit={ headerTheme.orgSplit } orgDescriptor={headerTheme.orgDescriptor!} white={ headerTheme.whiteHeaderBg }>
       <Header.Container>
-        <Header.Logo href="/site" />
+        <Header.Logo href={ logoUrl} />
         <Header.Content>
           <Header.MenuToggle />
-          <Header.Search />
+          <Header.Search action={"/site/search"}/>
           { renderLogoutButton && <Logout /> }
         </Header.Content>
       </Header.Container>
