@@ -2,11 +2,6 @@ import {BrProps} from '@bloomreach/react-sdk';
 import React from 'react';
 import {ContentsList} from "nhsuk-react-components";
 
-interface Link {
-  label: string,
-  url: string
-}
-
 export function TrainingByLocalTeams(props: BrProps) {
   const {trainingByLocalTeamsTitle, trainingByLocalTeamsLinks}: {trainingByLocalTeamsTitle: string, trainingByLocalTeamsLinks: Link[]} = props.component.getModels();
 

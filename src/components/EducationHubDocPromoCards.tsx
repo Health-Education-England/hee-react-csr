@@ -2,33 +2,33 @@ import {BrProps} from '@bloomreach/react-sdk';
 import React from 'react';
 import {Promo} from "nhsuk-react-components";
 
-export function SubHubListing(props: BrProps) {
-  const {subHubListingTitle, subHubDocs} = props.component.getModels();
+export function EducationHubDocPromoCards(props: BrProps) {
+  const {title, documents} = props.component.getModels();
 
-  if (!subHubDocs) {
+  if (!documents) {
     return null;
  }
 
-  // Builds SubHub page (promo) cards
-  let specialtyCards = [];
-  let specialtyGroupedCards = [];
-  for (const [index, subHubDocRef] of subHubDocs.entries()) {
-    const subHubDoc = subHubDocRef && props.page.getContent(subHubDocRef);
+  // Builds promo cards
+  let promoCards = [];
+  let promoGroupCards = [];
+  for (const [index, docRef] of documents.entries()) {
+    const doc = docRef && props.page.getContent(docRef);
 
-    if (!subHubDoc) {
+    if (!doc) {
       continue;
    }
 
-    const {title, abstract, image: imageRef, _links} = subHubDoc.getData<DocumentData>();
+    const {title, abstract, image: imageRef, _links} = doc.getData<DocumentData>();
 
     const image = imageRef && props.page.getContent(imageRef);
 
-    let cardUrl = subHubDoc.getUrl();
+    let cardUrl = doc.getUrl();
     if (_links?.site.type === 'internal') {
       cardUrl = _links?.site!.href;
    }
 
-    specialtyCards.push(
+    promoCards.push(
       <Promo
         key={index}
         href={cardUrl}
@@ -39,33 +39,33 @@ export function SubHubListing(props: BrProps) {
       </Promo>
     );
 
-    if (((index + 1) % 3 === 0) || (index + 1 === subHubDocs.length)) {
+    if (((index + 1) % 3 === 0) || (index + 1 === documents.length)) {
 
       // Adds empty promo cards to fill in the last row with 3 cards
       // in case if it contains less than 3
       if (((index + 1) % 3 !== 0)) {
         for (let j = 0; j < 3 - ((index + 1) % 3); j++) {
-          specialtyCards.push(
+          promoCards.push(
             <Promo key={index + j + 1} style={{visibility: 'hidden'}}>
             </Promo>
           );
        }
      }
 
-      specialtyGroupedCards.push(
+      promoGroupCards.push(
         <Promo.Group key={(index + 1) / 3}>
-          {specialtyCards}
+          {promoCards}
         </Promo.Group>
       );
 
-      specialtyCards = [];
+      promoCards = [];
    }
  }
 
   return (
     <>
-      <h2>{subHubListingTitle}</h2>
-      {specialtyGroupedCards}
+      <h2>{title}</h2>
+      {promoGroupCards}
       <br/>
     </>
   );

@@ -6,7 +6,7 @@ import {
   Article,
   AzureADProfile,
   Breadcrumb,
-  EducationHubListing,
+  EducationHubDocPromoCards,
   Footer,
   HeroBanner,
   Menu,
@@ -15,8 +15,6 @@ import {
   ProgrammePageContent,
   SharepointFiles,
   Search,
-  SubHubListing,
-  TrainingByLearningStage,
   TrainingByLocalTeams,
 } from "./components";
 
@@ -73,15 +71,15 @@ export default function App(props: RouteComponentProps) {
     Article,
     "AzureAD Profile": AzureADProfile,
     Breadcrumb,
-    EducationHubListing,
+    EducationHubListing: EducationHubDocPromoCards,
     "Hero Banner": HeroBanner,
     "Sharepoint Files": SharepointFiles,
     PageContent,
     ProgrammeListing,
     ProgrammePageContent,
     Search,
-    SubHubListing,
-    TrainingByLearningStage,
+    SubHubListing: EducationHubDocPromoCards,
+    TrainingByLearningStage: EducationHubDocPromoCards,
     TrainingByLocalTeams,
   };
 

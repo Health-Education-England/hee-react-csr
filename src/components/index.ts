@@ -1,7 +1,7 @@
 export * from './Article';
 export * from './AzureADProfile';
 export * from './Breadcrumb';
-export * from './EducationHubListing';
+export * from './EducationHubDocPromoCards';
 export * from './Footer';
 export * from './HeroBanner';
 export * from './Menu';
@@ -10,6 +10,4 @@ export * from './ProgrammeListing';
 export * from './ProgrammePageContent';
 export * from './Search';
 export * from './SharepointFiles';
-export * from './SubHubListing';
-export * from './TrainingByLearningStage';
 export * from './TrainingByLocalTeams';
