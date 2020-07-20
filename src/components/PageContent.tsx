@@ -43,8 +43,7 @@ function PromoCard(cardData: CardData) {
         imageSrc={cardData.imageUrl || undefined}
       >
         <Promo.Heading>{cardData.title}</Promo.Heading>
-        <Promo.Description>
-          <div dangerouslySetInnerHTML={{__html: cardData.summary}} />
+        <Promo.Description dangerouslySetInnerHTML={{__html: cardData.summary}}>
         </Promo.Description>
       </Promo>
     </Promo.Group>
