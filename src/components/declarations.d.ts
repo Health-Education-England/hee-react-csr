@@ -46,3 +46,8 @@ interface Pageable {
   totalPages: number;
   visiblePages: number;
 }
+
+interface Link {
+  label: string,
+  url: string
+}

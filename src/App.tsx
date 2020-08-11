@@ -2,7 +2,23 @@ import React from 'react';
 import axios from 'axios';
 import { RouteComponentProps } from 'react-router-dom';
 import { BrComponent, BrPage } from '@bloomreach/react-sdk';
-import { Article, AzureADProfile, Footer, HeroBanner, Menu, SharepointFiles, Search} from './components';
+import {
+  Article,
+  AzureADProfile,
+  Breadcrumb,
+  EducationHubDocPromoCards,
+  Footer,
+  HeroBanner,
+  Menu,
+  PageContent,
+  ProgrammeListing,
+  ProgrammeListingByAPI,
+  ProgrammePageContent,
+  ProgrammePageContentByAPI,
+  SharepointFiles,
+  Search,
+  TrainingByLocalTeams,
+} from "./components";
 
 axios.interceptors.request.use(config => ({ ...config, withCredentials: true }));
 
@@ -47,10 +63,29 @@ export default function App(props: RouteComponentProps) {
       },
     },
     request: {
-      path: `${siteContextRemovedPath}${props.location.search}`,
+      // appending `_maxreflevel=<max_content_item_ref_depth_level>` parameter
+      // in order to get additional depth level content item references.
+      path: `${siteContextRemovedPath}${props.location.search}${props.location.search ? '&' : '?'}_maxreflevel=2`,
     },
   };
-  const mapping = { Article, 'AzureAD Profile': AzureADProfile, 'Hero Banner': HeroBanner, 'Sharepoint Files': SharepointFiles, Search };
+
+  const mapping = {
+    Article,
+    "AzureAD Profile": AzureADProfile,
+    Breadcrumb,
+    EducationHubListing: EducationHubDocPromoCards,
+    "Hero Banner": HeroBanner,
+    "Sharepoint Files": SharepointFiles,
+    PageContent,
+    ProgrammeListing,
+    ProgrammeListingByAPI,
+    ProgrammePageContent,
+    ProgrammePageContentByAPI,
+    Search,
+    SubHubListing: EducationHubDocPromoCards,
+    TrainingByLearningStage: EducationHubDocPromoCards,
+    TrainingByLocalTeams,
+  };
 
   return (
     <BrPage configuration={configuration} mapping={mapping}>
@@ -72,14 +107,16 @@ export default function App(props: RouteComponentProps) {
           </div>
         </nav>
       </header>
+      <BrComponent path="breadcrumb" />
+
       <BrComponent path="hero" />
       <div className="nhsuk-width-container">
         <main className="nhsuk-main-wrapper" id="maincontent">
           {/* <BrPageContext.Consumer>
             { page => (
               <Label isPageHeading>{ page!.getTitle() }</Label>
-            ) }
-          </BrPageContext.Consumer> */}
+              ) }
+            </BrPageContext.Consumer> */}
           <BrComponent path="main" />
         </main>
       </div>

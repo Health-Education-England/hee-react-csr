@@ -7,6 +7,7 @@ interface HeaderTheme {
   orgName: string,
   orgSplit: string,
   orgDescriptor: string
+  channelType: string
 }
 
 interface HeaderThemeModels {
@@ -17,12 +18,22 @@ interface MenuLinkProps {
   item: MenuModels['menu']['siteMenuItems'][0];
 }
 
-function MenuLink({ item }: MenuLinkProps) {
+function MenuLink(props: any) {
+  const {item, channelType} = props;
+
   if (!item._links.site) {
     return <Header.NavItem disabled>{item.name}</Header.NavItem>;
   }
 
-  return <Header.NavItem href={item._links.site.href}>{item.name}</Header.NavItem>;
+  let menuUrl = item._links.site.href;
+  if ('education-hub' === channelType) {
+    // Temporary hack to remove education-hub channel specific context
+    // so that it would use global channel context
+    // (as education-hub menu are essentially being inherited from global channel)
+    menuUrl = menuUrl.replace(/site\/([^\/]+)/g, 'site');
+  }
+
+  return <Header.NavItem href={menuUrl}>{item.name}</Header.NavItem>;
 
   /* if (item._links.site.type === TYPE_LINK_EXTERNAL) {
     return <Header.NavItem href={item._links.site.href}>{item.name}2</Header.NavItem>;
@@ -71,6 +82,7 @@ export function Menu() {
   const { headerTheme } = component.getModels<HeaderThemeModels>();
 
   return (
+    <>
     <Header orgName={ headerTheme.orgName } orgSplit={ headerTheme.orgSplit } orgDescriptor={headerTheme.orgDescriptor!} white={ headerTheme.whiteHeaderBg }>
       <Header.Container>
         <Header.Logo href={ logoUrl} />
@@ -91,9 +103,10 @@ export function Menu() {
         </Header.NavItem> */}
         <BrManageMenuButton menu={menu} />
         { menu.siteMenuItems.map((item, index) => (
-          <MenuLink key={index} item={item} />
+          <MenuLink key={index} item={item} channelType={headerTheme.channelType}/>
         )) }
       </Header.Nav>
     </Header>
+    </>
   );
 }
